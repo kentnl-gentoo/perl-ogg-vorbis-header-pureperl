@@ -4,7 +4,7 @@ use 5.005;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new 
 {
@@ -59,7 +59,7 @@ sub info
     }
 
     # otherwise, return the value for the given key
-    return $self->{'INFO'}{$key};
+    return $self->{'INFO'}{lc $key};
 }
 
 sub comment_tags 
@@ -75,12 +75,12 @@ sub comment
     my $key = shift;
 
     # if the user supplied key does not exist, return undef
-    unless($self->{'COMMENTS'}{$key})
+    unless($self->{'COMMENTS'}{lc $key})
     {
 	return undef;
     }
 
-    return @{$self->{'COMMENTS'}{$key}};
+    return @{$self->{'COMMENTS'}{lc $key}};
 }
 
 sub add_comments 
@@ -374,8 +374,8 @@ sub _loadComments
 
 	my ($key, $value) = split(/=/, $buffer);
 
-	push @{$comments{$key}}, $value;
-	push @{$data->{'COMMENT_KEYS'}}, $key;
+	push @{$comments{lc $key}}, $value;
+	push @{$data->{'COMMENT_KEYS'}}, lc $key;
     }
     
     # read past the framing_bit
@@ -536,7 +536,7 @@ the C<new> and C<load> constructors have identical behavior.
 
 	use Ogg::Vorbis::Header::PurePerl;
 	my $ogg = Ogg::Vorbis::Header::PurePerl->new("song.ogg");
-	while (my ($key, $v) = each %{$ogg->info}) {
+	while (my ($k, $v) = each %{$ogg->info}) {
 		print "$k: $v\n";
 	}
 	foreach my $com ($ogg->comment_tags) {
