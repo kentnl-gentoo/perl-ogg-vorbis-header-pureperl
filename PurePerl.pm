@@ -4,7 +4,7 @@ use 5.005;
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub new 
 {
@@ -384,7 +384,7 @@ sub _loadComments
     read($fh, $buffer, 1);
     $byteCount += 1;
 
-    $data->{'startMainData'} = $byteCount;
+    $data->{'INFO'}{'offset'} = $byteCount;
 
     $data->{'COMMENTS'} = \%comments;
 }

@@ -7,3 +7,7 @@ Revision history for Perl extension Ogg::Vorbis::Header::PurePerl.
 0.03  Tue Dec  9 14:05:55 2003
 	- Added fix from Robert Moser II for problems with files
 	  with no comments.
+
+0.04  Tue Jan  6 16:04:23 2004
+	- Applied patch from Dan Sully to make "startMainData"
+	  accessible from the Info interface.
