@@ -11,7 +11,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test;
-BEGIN { plan tests => 8 };
+BEGIN { plan tests => 9 };
 use Ogg::Vorbis::Header::PurePerl;
 ok(1); # If we made it this far, we're ok.
 
@@ -38,3 +38,5 @@ $ogg = 0;
 ok(my $ogg = Ogg::Vorbis::Header::PurePerl->load("test.ogg"));
 ok(@{$ogg->comment("artist")}->[0] == "maloi");
 
+# Make sure we're getting the right track length
+ok($ogg->info->{"length"} == 0);

@@ -4,7 +4,9 @@ use 5.005;
 use strict;
 use warnings;
 
-our $VERSION = '0.05';
+use Fcntl qw/SEEK_END/;
+
+our $VERSION = '0.06';
 
 sub new 
 {
@@ -414,7 +416,14 @@ sub _calculateTrackLength
     my $pageSize;
     my $granule_position;
 
+    seek($fh,-8500,SEEK_END);  # that magic number is from vorbisfile.c
+    # in the constant CHUNKSIZE, which comes
+    # with the comment /* a shade over 8k;
+    # anyone using pages well over 8k gets
+    # what they deserve */
+
     # we just keep looking through the headers until we get to the last one
+    # (there might be a couple of blocks here)
     while(_findPage($fh))
     {
 	# stream structure version - must be 0x00
@@ -636,6 +645,9 @@ This is ALPHA SOFTWARE.  It may very well be very broken.  Do not use it in
 a production environment.  You have been warned.
 
 =head1 ACKNOWLEDGEMENTS
+
+Dave Brown <cpan@dagbrown.com> made this module significantly faster
+at calculating the length of ogg files.
 
 Robert Moser II <rlmoser@earthlink.net> fixed a problem with files that
 have no comments.
