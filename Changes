@@ -4,3 +4,6 @@ Revision history for Perl extension Ogg::Vorbis::Header::PurePerl.
 	- original version; created by h2xs 1.21 with options
 		-XA -n Ogg::Vorbis::Header::PurePerl
 
+0.03  Tue Dec  9 14:05:55 2003
+	- Added fix from Robert Moser II for problems with files
+	  with no comments.

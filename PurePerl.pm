@@ -4,7 +4,7 @@ use 5.005;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub new 
 {
@@ -360,6 +360,8 @@ sub _loadComments
     $user_comment_count = _decodeInt($buffer);
     $byteCount += 4;
 
+    $data->{'COMMENT_KEYS'} = [];
+
     # finally, read the comments
     for (my $i = 0; $i < $user_comment_count; $i++)
     {
@@ -615,6 +617,11 @@ Returns the path/filename of the file the object represents.
 
 This is ALPHA SOFTWARE.  It may very well be very broken.  Do not use it in
 a production environment.  You have been warned.
+
+=head1 ACKNOWLEDGEMENTS
+
+Robert Moser II <rlmoser@earthlink.net> fixed a problem with files that
+have no comments.
 
 =head1 AUTHOR
 
