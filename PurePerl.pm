@@ -4,7 +4,7 @@ use 5.005;
 use strict;
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub new 
 {
@@ -16,10 +16,28 @@ sub new
 
 sub load 
 {
-    my $class = shift;
-    my $file = shift;
-
+    my $class    = shift;
+    my $file     = shift;
+    my $from_new = shift;
     my %data;
+    my $self;
+
+    # there must be a better way...
+    if ($class eq 'Ogg::Vorbis::Header::PurePerl')
+    {
+	$self = bless \%data, $class;
+    }
+    else
+    {
+	$self = $class;
+    }
+
+    if ($self->{'FILE_LOADED'})
+    {
+	return $self;
+    }
+
+    $self->{'FILE_LOADED'} = 1;
 
     # check that the file exists and is readable
     unless ( -e $file && -r _ )
@@ -39,12 +57,11 @@ sub load
     _init(\%data);
     _loadInfo(\%data);
     _loadComments(\%data);
-#    $data{'INFO'}{'length'} = 0;
     _calculateTrackLength(\%data);
 
     close FILE;
 
-    return bless \%data, $class;
+    return $self;
 }
 
 sub info 

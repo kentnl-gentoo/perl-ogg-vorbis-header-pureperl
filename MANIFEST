@@ -4,4 +4,6 @@ MANIFEST
 PurePerl.pm
 README
 test.pl
+test.ogg
+LICENSE.GPL
 META.yml                                 Module meta-data (added by MakeMaker)
