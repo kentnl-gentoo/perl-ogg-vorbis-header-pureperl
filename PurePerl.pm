@@ -6,7 +6,7 @@ use warnings;
 
 use Fcntl qw/SEEK_END/;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub new 
 {
@@ -393,7 +393,8 @@ sub _loadComments
 	read($fh, $buffer, $comment_length);
 	$byteCount += $comment_length;
 
-	my ($key, $value) = split(/=/, $buffer);
+	my ($key) = $buffer =~ /^([^=]+)/;
+	my ($value) = $buffer =~ /=(.*)$/;
 
 	push @{$comments{lc $key}}, $value;
 	push @{$data->{'COMMENT_KEYS'}}, lc $key;

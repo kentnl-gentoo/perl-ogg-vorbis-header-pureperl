@@ -11,7 +11,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test;
-BEGIN { plan tests => 9 };
+BEGIN { plan tests => 10 };
 use Ogg::Vorbis::Header::PurePerl;
 ok(1); # If we made it this far, we're ok.
 
@@ -22,21 +22,24 @@ ok(1); # If we made it this far, we're ok.
 
 
 # See if partial load works
-ok(my $ogg = Ogg::Vorbis::Header::PurePerl->new("test.ogg"));
+ok(my $ogg = Ogg::Vorbis::Header::PurePerl->new('test.ogg'));
 
 # See if load_after works
 ok($ogg->load);
 
 # Try all the routines
-ok($ogg->info->{"rate"} == 44100);
+ok($ogg->info->{'rate'} == 44100);
 ok($ogg->comment_tags);
-ok(@{$ogg->comment("artist")}->[0] == "maloi");
+ok(@{$ogg->comment('artist')}->[0] == 'maloi');
 
 $ogg = 0;
 
 # See if full load works
-ok(my $ogg = Ogg::Vorbis::Header::PurePerl->load("test.ogg"));
-ok(@{$ogg->comment("artist")}->[0] == "maloi");
+ok(my $ogg = Ogg::Vorbis::Header::PurePerl->load('test.ogg'));
+ok(@{$ogg->comment('artist')}->[0] == 'maloi');
+
+# and see if we can get comments including the '=' character
+ok(@{$ogg->comment('album')}->[0] == 'this=that');
 
 # Make sure we're getting the right track length
-ok($ogg->info->{"length"} == 0);
+ok($ogg->info->{'length'} == 0);
