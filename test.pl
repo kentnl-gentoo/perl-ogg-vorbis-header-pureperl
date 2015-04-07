@@ -19,16 +19,16 @@ ok(my $ogg = Ogg::Vorbis::Header::PurePerl->new('test.ogg'));
 # Try all the routines
 ok($ogg->info->{'rate'} == 44100);
 ok($ogg->comment_tags);
-ok(@{$ogg->comment('artist')}->[0] == 'maloi');
+ok($ogg->comment('artist')->[0] == 'maloi');
 
 $ogg = 0;
 
 # See if full load works
 ok(my $ogg = Ogg::Vorbis::Header::PurePerl->new('test.ogg'));
-ok(@{$ogg->comment('artist')}->[0] == 'maloi');
+ok($ogg->comment('artist')->[0] == 'maloi');
 
 # and see if we can get comments including the '=' character
-ok(@{$ogg->comment('album')}->[0] == 'this=that');
+ok($ogg->comment('album')->[0] == 'this=that');
 
 # Make sure we're getting the right track length
 ok($ogg->info->{'length'} == 0);
